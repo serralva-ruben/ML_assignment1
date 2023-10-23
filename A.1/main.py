@@ -8,7 +8,7 @@ start = (group-1)*20+2
 end = group*20+1
 # Parameters
 alpha = 1
-num_iterations = 1000
+num_iterations = 200
 
 #reading the data
 data = pd.read_excel('./data.xlsx',skiprows=start-1,nrows=(end-start), names=['x','y'])
@@ -98,6 +98,9 @@ def update(i):
     ax2.set_ylabel('Cost')
     ax2.grid(True)
     ax2.legend()
+
+    ax2.text(0.05, 0.95, f'Current Cost: {cost:.4f}', transform=ax2.transAxes, verticalalignment='top')
+
     return line
 
 # Animate
