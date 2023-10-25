@@ -7,12 +7,12 @@ group = 10
 start = (group-1)*20+2
 end = group*20+1
 # Parameters
-alpha = 1
-num_iterations = 200
+alpha = 1.34
+num_iterations = 20
 
 #reading the data
-data = pd.read_excel('./data.xlsx',skiprows=start-1,nrows=(end-start), names=['x','y'])
-
+data = pd.read_excel('./data.xlsx',skiprows=start-2,nrows=(end-start), names=['x','y'])
+print(data)
 #normalizing the data - linear transformation also called min max transformation used because its the most versatile method of normalization
 def min_max_normalize(dataset):
     normalized_dataset = dataset.copy()
