@@ -64,9 +64,13 @@ J_history = []
 # Setup the figure and axis
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
 
+# Compute the regression line using least squares method
+reg_line_least_squares = get_reg_line(normalized_data)
+
 # Scatter plot for regression data
 ax1.scatter(normalized_data['x'], normalized_data['y'], label='Data Points')
-line, = ax1.plot(normalized_data['x'], np.zeros_like(normalized_data['y']), color='red', label='Regression Line')
+ax1.plot(normalized_data['x'], reg_line_least_squares, color='green', label='Least Squares Regression Line')
+line, = ax1.plot(normalized_data['x'], np.zeros_like(normalized_data['y']), color='red', label='Gradient Descent Regression Line')
 ax1.set_title('Scatter plot of x versus y with Gradient Descent in Real-time')
 ax1.set_xlabel('x')
 ax1.set_ylabel('y')
@@ -77,9 +81,10 @@ ax1.legend()
 ax2.set_xlim(0, num_iterations)
 ax2.set_ylim(0, compute_cost(X_b, y, theta) + 10)
 ax2.set_ylabel('Cost')
-ax2.set_title('Cost function over iterations')
+ax2.set_title('Cost function for Gradient Descent Regression Line')
 cost_line, = ax2.plot([], [], label='Cost Function', color='blue')
 ax2.legend()
+
 
 # Update function for animation
 def update(i):
