@@ -80,9 +80,6 @@ ax1.legend()
 # Initial setup for cost function plot
 ax2.set_xlim(0, num_iterations)
 ax2.set_ylim(0, compute_cost(X_b, y, theta) + 10)
-ax2.set_ylabel('Cost')
-ax2.set_title('Cost function for Gradient Descent Regression Line')
-cost_line, = ax2.plot([], [], label='Cost Function', color='blue')
 ax2.legend()
 
 
@@ -96,11 +93,11 @@ def update(i):
     line.set_ydata(X_b.dot(theta))
     
     ax2.clear()
-    ax2.plot(J_history, label='Cost Function')
-    ax2.set_title('Cost function over iterations')
     ax2.set_xlabel('Iterations')
     ax2.set_ylabel('Cost')
+    ax2.set_title('Cost function for Gradient Descent Regression Line')
     ax2.grid(True)
+    ax2.plot(J_history, label='Cost Function')
     ax2.legend()
 
     ax2.text(0.05, 0.95, f'Current Cost: {cost:.4f}', transform=ax2.transAxes, verticalalignment='top')
