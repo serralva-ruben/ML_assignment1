@@ -77,12 +77,6 @@ ax1.set_ylabel('y')
 ax1.grid(True)
 ax1.legend()
 
-# Initial setup for cost function plot
-ax2.set_xlim(0, num_iterations)
-ax2.set_ylim(0, compute_cost(X_b, y, theta) + 10)
-ax2.legend()
-
-
 # Update function for animation
 def update(i):
     global theta
