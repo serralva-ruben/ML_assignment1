@@ -6,8 +6,8 @@ import numpy as np
 group = 10
 start = (group-1)*20+2
 # Parameters
-alpha = 1.34
-num_iterations = 20
+alpha = 1.15
+num_iterations = 60
 
 #reading the data
 data = pd.read_excel('./data.xlsx',skiprows=start-1, nrows=20, names=['x','y'])
