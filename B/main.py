@@ -7,6 +7,8 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.ensemble import RandomForestClassifier
+import pandas as pd
+pd.set_option('display.max_rows', None)
 
 # 1. Dataset 1 creation:
 
@@ -15,26 +17,60 @@ rng = np.random.default_rng(42)
 mean_class1 = [2, 2]
 cov_class1 = [[0.5, 0], [0, 0.5]]
 data1_class1 = rng.multivariate_normal(mean_class1, cov_class1, 40)
-
 mean_class2 = [4, 4]
 cov_class2 = [[0.5, 0], [0, 0.5]]
 data1_class2 = rng.multivariate_normal(mean_class2, cov_class2, 40)
 
-# 2. Dataset 2 creation:
+df_class1 = pd.DataFrame(data1_class1, columns=['X', 'Y'])
+df_class2 = pd.DataFrame(data1_class2, columns=['X', 'Y'])
+
+print("Dataset for Class 1:")
+print(df_class1)
+print("\nDataset for Class 2:")
+print(df_class2)
+
+# 2
+# generating outliers:
 
 outliers_class1 = rng.uniform(0, 6, (4, 2))
 outliers_class2 = rng.uniform(0, 6, (4, 2))
 
-# 3. Data Split:
+df_outliers_class1 = pd.DataFrame(outliers_class1, columns=['X', 'Y'])
+df_outliers_class2 = pd.DataFrame(outliers_class2, columns=['X', 'Y'])
 
+print("Outliers class1: ")
+print(df_outliers_class1)
+print("\nOutliers class2: ")
+print(df_outliers_class2)
+
+# creating dataset 1 by putting class 1 and class 2 togheter
 X1 = np.vstack((data1_class1, data1_class2))
-y1 = np.array([0]*40 + [1]*40)
-
+# creating dataset 2 by putting dataset 1 and the outliers togheter
 X2 = np.vstack((X1, outliers_class1, outliers_class2))
+# setting labels for the data
+y1 = np.array([0]*40 + [1]*40)
 y2 = np.array([0]*40 + [1]*40 + [0]*4 + [1]*4)
+
+# 3. Data Split:
 
 X1_train, X1_test, y1_train, y1_test = train_test_split(X1, y1, test_size=0.25, random_state=42)
 X2_train, X2_test, y2_train, y2_test = train_test_split(X2, y2, test_size=0.25, random_state=42)
+
+df_X1_train = pd.DataFrame(X1_train, columns=['X', 'Y'])
+df_X1_train['Label'] = y1_train
+print(f'\nX1_train\n{df_X1_train}')
+
+df_X1_test = pd.DataFrame(X1_test, columns=['X', 'Y'])
+df_X1_test['Label'] = y1_test
+print(f'\nX1_test\n{df_X1_test}')
+
+df_X2_train = pd.DataFrame(X2_train, columns=['X', 'Y'])
+df_X2_train['Label'] = y2_train
+print(f'\nX2_train\n{df_X2_train}')
+
+df_X2_test = pd.DataFrame(X2_test, columns=['X', 'Y'])
+df_X2_test['Label'] = y2_test
+print(f'\nX2_test\n{df_X2_test}')
 
 # 4. Train Models and Report Results:
 

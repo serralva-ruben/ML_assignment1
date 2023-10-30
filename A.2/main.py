@@ -2,12 +2,15 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 import numpy as np
+import os
+save_dir = "./saved_plots"
+if not os.path.exists(save_dir): os.makedirs(save_dir)
 
 group = 10
 start = (group-1)*20+2
 # Parameters
-alpha = 1.15
-num_iterations = 60
+alpha = 0.5
+num_iterations = 501
 
 # Reading the data
 data = pd.read_excel('./data.xlsx', skiprows=start-1, nrows=20, names=['x', 'y'])
@@ -26,8 +29,9 @@ normalized_data = min_max_normalize(data)
 X = np.c_[normalized_data['x']**2, normalized_data['x'], np.ones(normalized_data.shape[0])]
 y = normalized_data['y'].values.reshape(-1, 1)
 
-# Initialize parameters theta
-theta = np.zeros((3, 1))
+# Initialize parameters theta between 0 and 1
+theta = np.random.rand(3,1)
+print(f'θ2 : {theta[2]}\nθ1 : {theta[1]}\nθ0 : {theta[0]}')
 
 # Cost Function
 def compute_cost(X, y, theta):
@@ -77,6 +81,8 @@ def update(i):
     ax2.grid(True)
     ax2.legend()
     ax2.text(0.05, 0.95, f'Current Cost: {cost:.4f}', transform=ax2.transAxes, verticalalignment='top')
+
+    if (i) % 100 == 0: plt.savefig(f"{save_dir}/plot_iteration_{i}.png")
 
     return line
 
